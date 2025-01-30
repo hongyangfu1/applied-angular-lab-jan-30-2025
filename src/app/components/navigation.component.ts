@@ -106,5 +106,9 @@ export class NavigationComponent {
       href: 'jeff-counter',
       text: 'Counter (Jeff)',
     },
+    {
+      href: 'counter-lab',
+      text: 'Counter (Hong)',
+    },
   ]);
 }
