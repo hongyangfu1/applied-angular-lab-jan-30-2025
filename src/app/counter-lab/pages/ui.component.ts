@@ -15,14 +15,14 @@ import { CounterStore } from '../services/counter.store';
   template: `
     <div>
       <button
-        [disabled]="disableButton()"
-        (click)="minusNumber()"
+        [disabled]="store.disableButton()"
+        (click)="store.minusNumber()"
         class="btn btn-primary"
       >
         -
       </button>
       <span data-testid="fizzbuzz">{{ store.current() }}</span>
-      <button (click)="addNumber()" class="btn btn-primary">+</button>
+      <button (click)="store.addNumber()" class="btn btn-primary">+</button>
 
       @if (fizzBuzzMessage() !== '') {
         <div class="alert alert-info">
@@ -45,24 +45,9 @@ import { CounterStore } from '../services/counter.store';
 })
 export class UiComponent {
   store = inject(CounterStore);
-  currentCounter = signal(0); // state
-  disableButton = computed(() => this.currentCounter() == 0);
-  counterChanged = output<number>();
-
-  addNumber() {
-    this.currentCounter.update((c) => c + 1);
-
-    this.counterChanged.emit(this.currentCounter());
-  }
-
-  minusNumber() {
-    this.currentCounter.update((c) => c - 1);
-
-    this.counterChanged.emit(this.currentCounter());
-  }
 
   fizzBuzzMessage = computed(() => {
-    const counter = this.currentCounter();
+    const counter = this.store.current();
     const fizzNumber = 3;
     const buzzNumber = 5;
 
